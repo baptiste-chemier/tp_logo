@@ -20,11 +20,13 @@ public class ControleurIhm implements ActionListener {
     protected VueIhm ihm;
     protected Tortue tortue;
     
-    public ControleurIhm (VueIhm i, Tortue t) {
+    public ControleurIhm (VueIhm i) {
         ihm = i;
-        tortue = t;
     }
     
+    public void setTortue(Tortue t) {
+        tortue = t;
+    }
     public void avancer(int dist) {
         int newX = (int) Math.round(tortue.getX() + dist * Math.cos(Constante.ratioDegRad * tortue.getDirection()));
         int newY = (int) Math.round(tortue.getY() + dist * Math.sin(Constante.ratioDegRad * tortue.getDirection()));
@@ -47,6 +49,7 @@ public class ControleurIhm implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+
         String c = e.getActionCommand();
 
         // actions des boutons du haut

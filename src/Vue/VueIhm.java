@@ -64,6 +64,7 @@ public class VueIhm extends JFrame implements Observer {
     
     public VueIhm() {
         super("Tortue Ninja");
+        controleur = new ControleurIhm(this);
         logoInit();
         
         addWindowListener(new WindowAdapter() {
@@ -147,6 +148,7 @@ public class VueIhm extends JFrame implements Observer {
         tortue.setPosition(500 / 2, 400 / 2);
 
         this.tortue = tortue;
+        controleur.setTortue(tortue); 
         vueTortue.addTortue(tortue);
 
         pack();
