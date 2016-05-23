@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Controleur;
-import Modele.Constante;
 import Modele.Tortue;
 import Vue.VueIhm;
 import java.awt.Dimension;
@@ -28,19 +27,15 @@ public class ControleurIhm implements ActionListener {
         tortue = t;
     }
     public void avancer(int dist) {
-        int newX = (int) Math.round(tortue.getX() + dist * Math.cos(Constante.ratioDegRad * tortue.getDirection()));
-        int newY = (int) Math.round(tortue.getY() + dist * Math.sin(Constante.ratioDegRad * tortue.getDirection()));
-
-        tortue.setX(newX);
-        tortue.setY(newY);
+        tortue.avancer(dist);
     }
 
     public void droite(int ang) {
-        tortue.setDirection((tortue.getDirection() + ang) % 360);
+        tortue.droite(ang);
     }
 
     public void gauche(int ang) {
-        tortue.setDirection((tortue.getDirection() - ang) % 360);
+        tortue.gauche(ang);
     }   
     
     /**
@@ -76,7 +71,9 @@ public class ControleurIhm implements ActionListener {
             } catch (NumberFormatException ex) {
                 System.err.println("ce n'est pas un nombre : " + ihm.getInputValue());
             }
-        } // actions des boutons du bas
+        } else if(c.equals("New turtle")) {
+            addTurtle();
+        }// actions des boutons du bas
         else if (c.equals("Effacer")) {
             effacer();
         } else if (c.equals("Quitter")) {
@@ -98,5 +95,12 @@ public class ControleurIhm implements ActionListener {
     
     public void quitter() {
         System.exit(0);
+    }
+    
+    public void addTurtle() {
+        System.out.println("passe COntroleur");
+        Tortue t = new Tortue();
+        t.setPosition(500 / 2, 400 / 2);
+        ihm.getVueTortue().addTortue(t);
     }
 }

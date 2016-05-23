@@ -47,6 +47,7 @@ public class VueIhm extends JFrame implements Observer {
     protected Tortue tortue;
     protected JTextField inputValue;
     protected ControleurIhm controleur;
+    protected int clickX, clickY;
     
     /**
      * @param args
@@ -74,6 +75,19 @@ public class VueIhm extends JFrame implements Observer {
                System.exit(0);
            }
         });
+/*        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 clickX = e.getX();
+                 clickY = e.getY();
+                 
+                 Tortue ClickedTortue;
+                 ClickedTortue = vueTortue.getClickedTortue(clickX, clickY, tortue);
+                tortue = ClickedTortue;
+                tortue.addObserver(this.);
+                 
+            }
+        });*/
     }
     
     public String getInputValue() {
@@ -98,6 +112,7 @@ public class VueIhm extends JFrame implements Observer {
         addButton(toolBar, "Avancer", "Avancer 50", null);
         addButton(toolBar, "Droite", "Droite 45", null);
         addButton(toolBar, "Gauche", "Gauche 45", null);
+        addButton(toolBar, "New turtle", "New turtle", null);
 
         String[] colorStrings = {"noir", "bleu", "cyan", "gris fonce", "rouge",
             "vert", "gris clair", "magenta", "orange",
@@ -148,6 +163,7 @@ public class VueIhm extends JFrame implements Observer {
         tortue.setPosition(500 / 2, 400 / 2);
 
         this.tortue = tortue;
+        this.tortue.addObserver(this);
         controleur.setTortue(tortue); 
         vueTortue.addTortue(tortue);
 
@@ -195,7 +211,7 @@ public class VueIhm extends JFrame implements Observer {
     
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        vueTortue.repaint();
     }
     
     public VueTortue getVueTortue() {

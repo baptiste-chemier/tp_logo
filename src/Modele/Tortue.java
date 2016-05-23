@@ -6,7 +6,6 @@
 package Modele;
 
 import java.awt.Color;
-import java.awt.Polygon;
 import java.util.Observable;
 
 /**
@@ -26,6 +25,7 @@ public class Tortue extends Observable {
     public Tortue() {
         comportement = new Fleche(this);
         comportement.reset();
+        
     }
     
     public void couleur(int n) {
@@ -168,5 +168,30 @@ public class Tortue extends Observable {
      */
     public void setComportement(Comportement comportement) {
         this.comportement = comportement;
+    }
+    
+    public void avancer(int dist) {
+        int newX = (int) Math.round(this.getX() + dist * Math.cos(Constante.ratioDegRad * this.getDirection()));
+        int newY = (int) Math.round(this.getY() + dist * Math.sin(Constante.ratioDegRad * this.getDirection()));
+
+        this.setX(newX);
+        this.setY(newY);
+        
+        setChanged();
+        notifyObservers();
+    }
+    
+    public void droite(int ang) {
+        this.setDirection((this.getDirection() + ang) % 360);
+        
+        setChanged();
+        notifyObservers();
+    }
+
+    public void gauche(int ang) {
+        this.setDirection((this.getDirection() - ang) % 360);
+        
+        setChanged();
+        notifyObservers();
     }
 }

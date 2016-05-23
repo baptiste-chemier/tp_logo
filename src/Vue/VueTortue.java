@@ -5,13 +5,11 @@
  */
 package Vue;
 
-import Modele.Constante;
 import Modele.Tortue;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +43,7 @@ public class VueTortue extends JPanel {
     
     public void addTortue(Tortue o) {
         tortues.add(o);
+        
     }
     
     public void reset() {
@@ -55,10 +54,20 @@ public class VueTortue extends JPanel {
     }
 
     public void showTurtles(Graphics g) {
+        
         for (Iterator it = tortues.iterator(); it.hasNext();) {
             Tortue t = (Tortue) it.next();
             t.getComportement().drawTurtle(g);
         }
+    }
+    
+    public Tortue getClickedTortue(int x, int y, Tortue t){
+        for (int i = 0; i<tortues.size(); i++) {
+            if (tortues.get(i).getComportement().getForme().contains(new Point(x, y))) {
+                return tortues.get(i);
+            }
+        }
+        return t;
     }
 
 }

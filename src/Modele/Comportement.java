@@ -6,6 +6,7 @@
 package Modele;
 
 import java.awt.Graphics;
+import java.awt.Polygon;
 
 
 /**
@@ -50,4 +51,6 @@ public abstract class Comportement {
      * @param graph
      */
     public abstract void drawTurtle(Graphics graph);
+    public abstract Polygon getForme();
+    
 }   

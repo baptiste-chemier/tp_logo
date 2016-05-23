@@ -16,6 +16,7 @@ import java.awt.Polygon;
  */
 public class Fleche extends Comportement {
 
+    Polygon arrow;
     public Fleche(Tortue t) {
         super(t);
     }
@@ -29,7 +30,8 @@ public class Fleche extends Comportement {
         //Calcule les 3 coins du triangle a partir de
         // la position de la tortue p
         Point p = new Point(tortue.getX(), tortue.getY());
-        Polygon arrow = new Polygon();
+        System.out.println("x : "+tortue.getX()+", Y: "+tortue.getY());
+        arrow = new Polygon();
 
 		//Calcule des deux bases
         //Angle de la droite
@@ -56,4 +58,7 @@ public class Fleche extends Comportement {
         graph.fillPolygon(arrow);
     }
     
+    public Polygon getForme() {
+        return this.arrow;
+    }
 }
