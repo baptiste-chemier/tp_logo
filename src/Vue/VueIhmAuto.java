@@ -5,95 +5,52 @@
  */
 package Vue;
 
-import Controleur.ControleurIhm;
-import Modele.Tortue;
+import Controleur.ControleurIhmAuto;
+import Modele.TortueAuto;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
 /**
  *
  * @author Epulapp
  */
-public class VueIhm extends JFrame implements Observer {
-    
-    protected VueTortue vueTortue;
+public class VueIhmAuto extends JFrame implements Observer {
+
+    protected VueTortueNormale vueTortue;
     public static final Dimension VGAP = new Dimension(1, 5);
     public static final Dimension HGAP = new Dimension(5, 1);
-    protected Tortue tortue;
-    protected JTextField inputValue;
-    protected ControleurIhm controleur;
+    private List<TortueAuto> listTortue;
+    protected ControleurIhmAuto controleur;
     protected int clickX, clickY;
-    
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
 
-                VueIhm fenetre = new VueIhm();
-                fenetre.setVisible(true);
-            }
-        });
-    }
-    
-    public VueIhm() {
+    public VueIhmAuto() {
         super("Tortue Ninja");
-        controleur = new ControleurIhm(this);
+        listTortue = new ArrayList<>();
+        controleur = new ControleurIhmAuto(this);
         logoInit();
-        
-        addWindowListener(new WindowAdapter() {
-           @Override
-           public void windowClosing(WindowEvent arg0) {
-               super.windowClosing(arg0);
-               System.exit(0);
-           }
-        });
-/*        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                 clickX = e.getX();
-                 clickY = e.getY();
-                 
-                 Tortue ClickedTortue;
-                 ClickedTortue = vueTortue.getClickedTortue(clickX, clickY, tortue);
-                tortue = ClickedTortue;
-                tortue.addObserver(this.);
-                 
-            }
-        });*/
     }
-    
-    public String getInputValue() {
-        return inputValue.getText();
-    }
-    
+
     public void logoInit() {
         getContentPane().setLayout(new BorderLayout(10, 10));
 
@@ -104,52 +61,17 @@ public class VueIhm extends JFrame implements Observer {
 
         getContentPane().add(buttonPanel, "North");
 
-        addButton(toolBar, "Effacer", "Nouveau dessin", "/icons/index.png");
-
         toolBar.add(Box.createRigidArea(HGAP));
-        inputValue = new JTextField("45", 5);
-        toolBar.add(inputValue);
-        addButton(toolBar, "Avancer", "Avancer 50", null);
-        addButton(toolBar, "Droite", "Droite 45", null);
-        addButton(toolBar, "Gauche", "Gauche 45", null);
         addButton(toolBar, "New turtle", "New turtle", null);
-
-        String[] colorStrings = {"noir", "bleu", "cyan", "gris fonce", "rouge",
-            "vert", "gris clair", "magenta", "orange",
-            "gris", "rose", "jaune"};
-
-        // Create the combo box
-        toolBar.add(Box.createRigidArea(HGAP));
-        JLabel colorLabel = new JLabel("   Couleur: ");
-        toolBar.add(colorLabel);
-        JComboBox colorList = new JComboBox(colorStrings);
-        toolBar.add(colorList);
-
-        colorList.addActionListener(controleur);
 
         // Menus
         JMenuBar menubar = new JMenuBar();
         setJMenuBar(menubar);	// on installe le menu bar
         JMenu menuFile = new JMenu("File"); // on installe le premier menu
         menubar.add(menuFile);
-
-        addMenuItem(menuFile, "Effacer", "Effacer", KeyEvent.VK_N);
-        addMenuItem(menuFile, "Quitter", "Quitter", KeyEvent.VK_Q);
-
-        JMenu menuCommandes = new JMenu("Commandes"); // on installe le premier menu
-        menubar.add(menuCommandes);
-        addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
-        addMenuItem(menuCommandes, "Droite", "Droite", -1);
-        addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
-
-        JMenu menuHelp = new JMenu("Aide"); // on installe le premier menu
-        menubar.add(menuHelp);
-        addMenuItem(menuHelp, "Aide", "Help", -1);
-        addMenuItem(menuHelp, "A propos", "About", -1);
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        vueTortue = new VueTortue(); //500, 400);
+        vueTortue = new VueTortueNormale(); //500, 400);
         vueTortue.setBackground(Color.white);
         vueTortue.setSize(new Dimension(600, 400));
         vueTortue.setPreferredSize(new Dimension(600, 400));
@@ -157,14 +79,18 @@ public class VueIhm extends JFrame implements Observer {
         getContentPane().add(vueTortue, "Center");
 
         // Creation de la tortue
-        Tortue tortue = new Tortue();
+        TortueAuto tortue = new TortueAuto();
 
         // Deplacement de la tortue au centre de la vueTortue
-        tortue.setPosition(500 / 2, 400 / 2);
+        int posX = (int) (Math.random() * (600 - 0)) + 0;
+        int posY = (int) (Math.random() * (400 - 0)) + 0;
+        tortue.setPosition(posX / 2, posY / 2);
 
-        this.tortue = tortue;
-        this.tortue.addObserver(this);
-        controleur.setTortue(tortue); 
+        listTortue.add(tortue);
+        for(int i = 0; i < listTortue.size(); i++)
+            this.getListTortue().get(i).addObserver(this);
+        
+        controleur.getListTortue().add(tortue);
         vueTortue.addTortue(tortue);
 
         pack();
@@ -199,7 +125,7 @@ public class VueIhm extends JFrame implements Observer {
         m.add(menuItem);
 
         menuItem.setActionCommand(command);
-        menuItem.addActionListener(controleur);
+       // menuItem.addActionListener(controleur);
         if (key > 0) {
             if (key != KeyEvent.VK_DELETE) {
                 menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
@@ -208,14 +134,20 @@ public class VueIhm extends JFrame implements Observer {
             }
         }
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
         vueTortue.repaint();
     }
-    
-    public VueTortue getVueTortue() {
+
+    public VueTortueNormale getVueTortue() {
         return vueTortue;
     }
 
+    /**
+     * @return the tortue
+     */
+    public List<TortueAuto> getListTortue() {
+        return listTortue;
+    }
 }

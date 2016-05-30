@@ -5,8 +5,7 @@
  */
 package Modele;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import constante.Constante;
 import java.awt.Point;
 import java.awt.Polygon;
 
@@ -14,26 +13,23 @@ import java.awt.Polygon;
  *
  * @author Epulapp
  */
-public class Fleche extends Comportement {
+public class Fleche extends Formes {
 
     Polygon arrow;
+
     public Fleche(Tortue t) {
         super(t);
     }
-    
-    @Override
-    public void drawTurtle(Graphics graph) {
-        if (graph == null) {
-            return;
-        }
+
+    public void drawTurtle(Tortue tortue) {
 
         //Calcule les 3 coins du triangle a partir de
         // la position de la tortue p
         Point p = new Point(tortue.getX(), tortue.getY());
-        System.out.println("x : "+tortue.getX()+", Y: "+tortue.getY());
+        //System.out.println("x : " + tortue.getX() + ", Y: " + tortue.getY());
         arrow = new Polygon();
 
-		//Calcule des deux bases
+        //Calcule des deux bases
         //Angle de la droite
         double theta = Constante.ratioDegRad * (-tortue.getDirection());
         //Demi angle au sommet du triangle
@@ -54,11 +50,9 @@ public class Fleche extends Comportement {
                 (int) Math.round(p2.y + r * Math.sin(theta - alpha)));
 
         arrow.addPoint(p2.x, p2.y);
-        graph.setColor(Color.green);
-        graph.fillPolygon(arrow);
     }
-    
-    public Polygon getForme() {
+
+    public Polygon getArrow() {
         return this.arrow;
     }
 }

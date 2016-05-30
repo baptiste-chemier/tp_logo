@@ -7,13 +7,12 @@ package Modele;
 
 import constante.Constante;
 import java.awt.Color;
-import java.util.Observable;
 
 /**
  *
  * @author Epulapp
  */
-public class Tortue extends Observable {
+public class TortueAuto extends Tortue {
 
     private int x;
     private int y;
@@ -21,29 +20,35 @@ public class Tortue extends Observable {
     private int color;
     private Formes formes;
     private Color couleur;
+    private int dist;
 
-    public Tortue() {
+    public TortueAuto() {
         this.x = 0;
         this.y = 0;
-        this.direction = 0;
-        this.color = 1;
+        this.direction = (int) (Math.random() * (360 - 0)) + 0;
+        this.color = (int) (Math.random() * (11 - 0)) + 0;
         this.formes = new Fleche(this);
         this.couleur = decodeColor(color);
+        this.dist = (int) (Math.random() * (20 - 5)) + 5;
     }
 
+    @Override
     public void couleur(int n) {
         setColor(n % 12);
     }
 
+    @Override
     public void couleurSuivante() {
         couleur(getColor() + 1);
     }
 
+    @Override
     public void setPosition(int newX, int newY) {
         x = newX;
         y = newY;
     }
 
+    @Override
     protected Color decodeColor(int c) {
         switch (c) {
             case 0:
@@ -78,6 +83,7 @@ public class Tortue extends Observable {
     /**
      * @return the x
      */
+    @Override
     public int getX() {
         return x;
     }
@@ -85,6 +91,7 @@ public class Tortue extends Observable {
     /**
      * @param x the x to set
      */
+    @Override
     public void setX(int x) {
         this.x = x;
     }
@@ -92,6 +99,7 @@ public class Tortue extends Observable {
     /**
      * @return the y
      */
+    @Override
     public int getY() {
         return y;
     }
@@ -99,6 +107,7 @@ public class Tortue extends Observable {
     /**
      * @param y the y to set
      */
+    @Override
     public void setY(int y) {
         this.y = y;
     }
@@ -106,6 +115,7 @@ public class Tortue extends Observable {
     /**
      * @return the direction
      */
+    @Override
     public int getDirection() {
         return direction;
     }
@@ -113,6 +123,7 @@ public class Tortue extends Observable {
     /**
      * @param direction the direction to set
      */
+    @Override
     public void setDirection(int direction) {
         this.direction = direction;
     }
@@ -120,6 +131,7 @@ public class Tortue extends Observable {
     /**
      * @return the color
      */
+    @Override
     public int getColor() {
         return color;
     }
@@ -127,38 +139,50 @@ public class Tortue extends Observable {
     /**
      * @param color the color to set
      */
+    @Override
     public void setColor(int color) {
         this.color = color;
         this.setCouleur(decodeColor(this.color));
     }
 
-    public void avancer(int dist) {
-        int newX = (int) Math.round(this.getX() + dist * Math.cos(Constante.ratioDegRad * this.getDirection()));
-        int newY = (int) Math.round(this.getY() + dist * Math.sin(Constante.ratioDegRad * this.getDirection()));
+    public void avancer() {
+        int newX = (int) Math.round(this.getX() + getDist() * Math.cos(Constante.ratioDegRad * this.getDirection()));
+        int newY = (int) Math.round(this.getY() + getDist() * Math.sin(Constante.ratioDegRad * this.getDirection()));
 
-        this.setX(newX);
-        this.setY(newY);
+        if (newX > 600) {
+            this.setX(0);
+
+        } else if (newX < 0) {
+            this.setX(600);
+
+        } else {
+            this.setX(newX);
+        }
+        if (newY > 400) {
+            this.setY(0);
+
+        } else if (newY < 0) {
+            this.setY(400);
+
+        } else {
+            this.setY(newY);
+        }
         notifier();
     }
 
+    @Override
     public void droite(int ang) {
         this.setDirection((this.getDirection() + ang) % 360);
         notifier();
     }
 
+    @Override
     public void gauche(int ang) {
         this.setDirection((this.getDirection() - ang) % 360);
         notifier();
     }
 
-    public void reset() {
-        this.setX(0);
-        this.setY(0);
-        this.setDirection(-90);
-        this.setColor(1);
-        notifier();
-    }
-
+    @Override
     public void notifier() {
         setChanged();
         notifyObservers();
@@ -167,6 +191,7 @@ public class Tortue extends Observable {
     /**
      * @return the formes
      */
+    @Override
     public Formes getFormes() {
         return formes;
     }
@@ -174,6 +199,7 @@ public class Tortue extends Observable {
     /**
      * @param formes the formes to set
      */
+    @Override
     public void setFormes(Formes formes) {
         this.formes = formes;
     }
@@ -181,6 +207,7 @@ public class Tortue extends Observable {
     /**
      * @return the couleur
      */
+    @Override
     public Color getCouleur() {
         return couleur;
     }
@@ -188,7 +215,22 @@ public class Tortue extends Observable {
     /**
      * @param couleur the couleur to set
      */
+    @Override
     public void setCouleur(Color couleur) {
         this.couleur = couleur;
+    }
+
+    /**
+     * @return the dist
+     */
+    public int getDist() {
+        return dist;
+    }
+
+    /**
+     * @param dist the dist to set
+     */
+    public void setDist(int dist) {
+        this.dist = dist;
     }
 }

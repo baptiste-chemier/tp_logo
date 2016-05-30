@@ -4,28 +4,31 @@
  * and open the template in the editor.
  */
 package Controleur;
+
 import Modele.Tortue;
-import Vue.VueIhm;
-import java.awt.Dimension;
+import Vue.VueIhmNormale;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author Epulapp
  */
-public class ControleurIhm implements ActionListener {
-    
-    protected VueIhm ihm;
+public class ControleurIhmNormale implements ActionListener {
+
+    protected VueIhmNormale ihmNormale;
     protected Tortue tortue;
-    
-    public ControleurIhm (VueIhm i) {
-        ihm = i;
+    protected int couleur;
+
+    public ControleurIhmNormale(VueIhmNormale i) {
+        ihmNormale = i;
     }
-    
+
     public void setTortue(Tortue t) {
         tortue = t;
     }
+
     public void avancer(int dist) {
         tortue.avancer(dist);
     }
@@ -36,71 +39,78 @@ public class ControleurIhm implements ActionListener {
 
     public void gauche(int ang) {
         tortue.gauche(ang);
-    }   
-    
+    }
+
     /**
      * la gestion des actions des boutons
+     *
      * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        this.tortue = this.ihmNormale.getTortue();
 
         String c = e.getActionCommand();
 
         // actions des boutons du haut
         if (c.equals("Avancer")) {
-            System.out.println("command avancer");
+            //System.out.println("command avancer");
             try {
-                int v = Integer.parseInt(ihm.getInputValue());
+                int v = Integer.parseInt(ihmNormale.getInputValue());
                 avancer(v);
             } catch (NumberFormatException ex) {
-                System.err.println("ce n'est pas un nombre : " + ihm.getInputValue());
+                System.err.println("ce n'est pas un nombre : " + ihmNormale.getInputValue());
             }
 
         } else if (c.equals("Droite")) {
             try {
-                int v = Integer.parseInt(ihm.getInputValue());
+                int v = Integer.parseInt(ihmNormale.getInputValue());
                 droite(v);
             } catch (NumberFormatException ex) {
-                System.err.println("ce n'est pas un nombre : " + ihm.getInputValue());
+                System.err.println("ce n'est pas un nombre : " + ihmNormale.getInputValue());
             }
         } else if (c.equals("Gauche")) {
             try {
-                int v = Integer.parseInt(ihm.getInputValue());
+                int v = Integer.parseInt(ihmNormale.getInputValue());
                 gauche(v);
             } catch (NumberFormatException ex) {
-                System.err.println("ce n'est pas un nombre : " + ihm.getInputValue());
+                System.err.println("ce n'est pas un nombre : " + ihmNormale.getInputValue());
             }
-        } else if(c.equals("New turtle")) {
+        } else if (c.equals("New turtle")) {
             addTurtle();
         }// actions des boutons du bas
         else if (c.equals("Effacer")) {
             effacer();
+        } else if (c.equals("comboBoxChanged")) {
+            JComboBox comboBox = (JComboBox) e.getSource();
+            couleur = comboBox.getSelectedIndex();
         } else if (c.equals("Quitter")) {
             quitter();
         }
-
-        ihm.repaint();
     }
-    
+
     // efface tout et reinitialise la feuille
     public void effacer() {
-        ihm.getVueTortue().reset();
-        ihm.repaint();
-        
+        ihmNormale.getVueTortue().reset();
         // Replace la tortue centre
-        Dimension size = ihm.getSize();
-        tortue.setPosition(size.width / 2, size.height / 2);
+        tortue.setPosition(500 / 2, 400 / 2);
     }
-    
+
     public void quitter() {
         System.exit(0);
     }
-    
+
     public void addTurtle() {
-        System.out.println("passe COntroleur");
+        //System.out.println("passe Controleur");
         Tortue t = new Tortue();
+
         t.setPosition(500 / 2, 400 / 2);
-        ihm.getVueTortue().addTortue(t);
+        t.setColor(couleur);
+
+        ihmNormale.setTortue(t);
+        ihmNormale.getVueTortue().addTortue(t);
+
+        t.addObserver(ihmNormale);
+        t.notifier();;
     }
 }
