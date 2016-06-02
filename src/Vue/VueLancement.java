@@ -27,15 +27,16 @@ public class VueLancement extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButtonAuto = new javax.swing.JButton();
+        jButtonFlock = new javax.swing.JButton();
         jButtonNrml = new javax.swing.JButton();
+        jButtonAuto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButtonAuto.setText("Autonome");
-        jButtonAuto.addActionListener(new java.awt.event.ActionListener() {
+        jButtonFlock.setText("Flocking");
+        jButtonFlock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAutoActionPerformed(evt);
+                jButtonFlockActionPerformed(evt);
             }
         });
 
@@ -46,6 +47,13 @@ public class VueLancement extends javax.swing.JFrame {
             }
         });
 
+        jButtonAuto.setText("Autonome");
+        jButtonAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAutoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -53,8 +61,9 @@ public class VueLancement extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonNrml, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addComponent(jButtonNrml, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jButtonFlock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonAuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -64,6 +73,8 @@ public class VueLancement extends javax.swing.JFrame {
                 .addComponent(jButtonNrml, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonFlock, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -73,12 +84,21 @@ public class VueLancement extends javax.swing.JFrame {
     private void jButtonNrmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNrmlActionPerformed
         VueIhmNormale fenetre = new VueIhmNormale();
         fenetre.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonNrmlActionPerformed
+
+    private void jButtonFlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFlockActionPerformed
+        VueIhmFlock fenetre = new VueIhmFlock();
+        fenetre.setVisible(true);
+        fenetre.controleur.start();
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonFlockActionPerformed
 
     private void jButtonAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutoActionPerformed
         VueIhmAuto fenetre = new VueIhmAuto();
         fenetre.setVisible(true);
         fenetre.controleur.start();
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonAutoActionPerformed
 
     /**
@@ -118,6 +138,7 @@ public class VueLancement extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAuto;
+    private javax.swing.JButton jButtonFlock;
     private javax.swing.JButton jButtonNrml;
     // End of variables declaration//GEN-END:variables
 }

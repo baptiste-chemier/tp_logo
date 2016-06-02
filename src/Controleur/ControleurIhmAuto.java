@@ -7,9 +7,9 @@ package Controleur;
 
 import Modele.TortueAuto;
 import Vue.VueIhmAuto;
+import Vue.VueIhmFlock;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,17 +21,16 @@ import java.util.logging.Logger;
 public class ControleurIhmAuto extends Thread implements ActionListener {
 
     protected VueIhmAuto ihmAuto;
+    protected VueIhmFlock ihmFlock;
     private List<TortueAuto> listTortue;
 
     @Override
     public void run() {
         while (true) {
             try {
-                // traitement
-                System.out.println("Ligne affichée par le thread");
-                for (int i = 0; i < getListTortue().size(); i++) {
-                    getListTortue().get(i).avancer();
-                }
+                for(TortueAuto tortue : getListTortue())
+                    tortue.avancer();
+                
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ControleurIhmAuto.class.getName()).log(Level.SEVERE, null, ex);
@@ -39,9 +38,9 @@ public class ControleurIhmAuto extends Thread implements ActionListener {
         }
     }
 
-    public ControleurIhmAuto(VueIhmAuto i) {
+    public ControleurIhmAuto(VueIhmAuto i, List<TortueAuto> lt) {
         ihmAuto = i;
-        listTortue = new ArrayList<>();
+        listTortue = lt;
     }
 
     /**
@@ -69,8 +68,8 @@ public class ControleurIhmAuto extends Thread implements ActionListener {
         t.setPosition(posX / 2, posY / 2);
         int couleur = (int) (Math.random() * (11 - 0)) + 0;
         t.setColor(couleur);
-        int dist = (int) (Math.random() * (20 - 5)) + 5;
-        t.setDist(dist);
+        int vitesse = (int) (Math.random() * (20 - 5)) + 5;
+        t.setVitesse(vitesse);
 
         ihmAuto.getListTortue().add(t);
         ihmAuto.getVueTortue().addTortue(t);

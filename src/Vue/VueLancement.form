@@ -26,8 +26,9 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButtonAuto" max="32767" attributes="0"/>
-                  <Component id="jButtonNrml" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="jButtonNrml" pref="380" max="32767" attributes="0"/>
+                  <Component id="jButtonFlock" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButtonAuto" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -40,18 +41,20 @@
               <Component id="jButtonNrml" min="-2" pref="74" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonAuto" min="-2" pref="74" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jButtonFlock" min="-2" pref="74" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButtonAuto">
+    <Component class="javax.swing.JButton" name="jButtonFlock">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Autonome"/>
+        <Property name="text" type="java.lang.String" value="Flocking"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAutoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFlockActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonNrml">
@@ -60,6 +63,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNrmlActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAuto">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Autonome"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAutoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

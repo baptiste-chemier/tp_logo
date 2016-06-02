@@ -5,8 +5,9 @@
  */
 package Modele;
 
+import Vue.Fleche;
+import Vue.Formes;
 import constante.Constante;
-import java.awt.Color;
 
 /**
  *
@@ -19,8 +20,7 @@ public class TortueAuto extends Tortue {
     private int direction;
     private int color;
     private Formes formes;
-    private Color couleur;
-    private int dist;
+    private int vitesse;
 
     public TortueAuto() {
         this.x = 0;
@@ -28,8 +28,7 @@ public class TortueAuto extends Tortue {
         this.direction = (int) (Math.random() * (360 - 0)) + 0;
         this.color = (int) (Math.random() * (11 - 0)) + 0;
         this.formes = new Fleche(this);
-        this.couleur = decodeColor(color);
-        this.dist = (int) (Math.random() * (20 - 5)) + 5;
+        this.vitesse = (int) (Math.random() * (20 - 5)) + 5;
     }
 
     @Override
@@ -46,38 +45,6 @@ public class TortueAuto extends Tortue {
     public void setPosition(int newX, int newY) {
         x = newX;
         y = newY;
-    }
-
-    @Override
-    protected Color decodeColor(int c) {
-        switch (c) {
-            case 0:
-                return (Color.black);
-            case 1:
-                return (Color.blue);
-            case 2:
-                return (Color.cyan);
-            case 3:
-                return (Color.darkGray);
-            case 4:
-                return (Color.red);
-            case 5:
-                return (Color.green);
-            case 6:
-                return (Color.lightGray);
-            case 7:
-                return (Color.magenta);
-            case 8:
-                return (Color.orange);
-            case 9:
-                return (Color.gray);
-            case 10:
-                return (Color.pink);
-            case 11:
-                return (Color.yellow);
-            default:
-                return (Color.black);
-        }
     }
 
     /**
@@ -142,27 +109,26 @@ public class TortueAuto extends Tortue {
     @Override
     public void setColor(int color) {
         this.color = color;
-        this.setCouleur(decodeColor(this.color));
     }
 
     public void avancer() {
-        int newX = (int) Math.round(this.getX() + getDist() * Math.cos(Constante.ratioDegRad * this.getDirection()));
-        int newY = (int) Math.round(this.getY() + getDist() * Math.sin(Constante.ratioDegRad * this.getDirection()));
+        int newX = (int) Math.round(this.getX() + getVitesse()* Math.cos(Constante.ratioDegRad * this.getDirection()));
+        int newY = (int) Math.round(this.getY() + getVitesse() * Math.sin(Constante.ratioDegRad * this.getDirection()));
 
-        if (newX > 600) {
+        if (newX > constante.Constante.width) {
             this.setX(0);
 
         } else if (newX < 0) {
-            this.setX(600);
+            this.setX(constante.Constante.width);
 
         } else {
             this.setX(newX);
         }
-        if (newY > 400) {
+        if (newY > constante.Constante.heigh) {
             this.setY(0);
 
         } else if (newY < 0) {
-            this.setY(400);
+            this.setY(constante.Constante.heigh);
 
         } else {
             this.setY(newY);
@@ -205,32 +171,16 @@ public class TortueAuto extends Tortue {
     }
 
     /**
-     * @return the couleur
+     * @return the vitesse
      */
-    @Override
-    public Color getCouleur() {
-        return couleur;
+    public int getVitesse() {
+        return vitesse;
     }
 
     /**
-     * @param couleur the couleur to set
+     * @param vitesse the vitesse to set
      */
-    @Override
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
-    }
-
-    /**
-     * @return the dist
-     */
-    public int getDist() {
-        return dist;
-    }
-
-    /**
-     * @param dist the dist to set
-     */
-    public void setDist(int dist) {
-        this.dist = dist;
+    public void setVitesse(int vitesse) {
+        this.vitesse = vitesse;
     }
 }

@@ -21,16 +21,17 @@ public class ControleurIhmNormale implements ActionListener {
     protected Tortue tortue;
     protected int couleur;
 
-    public ControleurIhmNormale(VueIhmNormale i) {
+    public ControleurIhmNormale(VueIhmNormale i, Tortue t) {
         ihmNormale = i;
+        tortue = t;
     }
 
     public void setTortue(Tortue t) {
         tortue = t;
     }
 
-    public void avancer(int dist) {
-        tortue.avancer(dist);
+    public void avancer(int vitesse) {
+        tortue.avancer(vitesse);
     }
 
     public void droite(int ang) {

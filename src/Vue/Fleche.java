@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modele;
+package Vue;
 
+import Modele.Tortue;
 import constante.Constante;
 import java.awt.Point;
 import java.awt.Polygon;
@@ -36,7 +37,7 @@ public class Fleche extends Formes {
         double alpha = Math.atan((float) Constante.rb / (float) Constante.rp);
         //Rayon de la fleche
         double r = Math.sqrt(Constante.rp * Constante.rp + Constante.rb * Constante.rb);
-		//Sens de la fleche
+	//Sens de la fleche
 
         //Pointe
         Point p2 = new Point((int) Math.round(p.x + r * Math.cos(theta)),

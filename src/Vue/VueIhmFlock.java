@@ -5,20 +5,20 @@
  */
 package Vue;
 
-import Controleur.ControleurIhmAuto;
-import Modele.TortueAuto;
+import Controleur.ControleurIhmFlock;
+import Modele.TortueFlock;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -35,19 +35,19 @@ import javax.swing.KeyStroke;
  *
  * @author Epulapp
  */
-public class VueIhmAuto extends JFrame implements Observer {
+public class VueIhmFlock extends JFrame implements Observer {
 
     protected VueTortue vueTortue;
     public static final Dimension VGAP = new Dimension(1, 5);
     public static final Dimension HGAP = new Dimension(5, 1);
-    private List<TortueAuto> listTortue;
-    protected ControleurIhmAuto controleur;
+    private List<TortueFlock> listTortue;
+    protected ControleurIhmFlock controleur;
     protected int clickX, clickY;
 
-    public VueIhmAuto() {
+    public VueIhmFlock() {
         super("Tortue Ninja");
         listTortue = new ArrayList<>();
-        controleur = new ControleurIhmAuto(this, listTortue);
+        controleur = new ControleurIhmFlock(this, listTortue);
         logoInit();
     }
 
@@ -60,9 +60,6 @@ public class VueIhmAuto extends JFrame implements Observer {
         buttonPanel.add(toolBar);
 
         getContentPane().add(buttonPanel, "North");
-
-        toolBar.add(Box.createRigidArea(HGAP));
-        addButton(toolBar, "New turtle", "New turtle", null);
 
         // Menus
         JMenuBar menubar = new JMenuBar();
@@ -79,21 +76,23 @@ public class VueIhmAuto extends JFrame implements Observer {
         getContentPane().add(vueTortue, "Center");
 
         // Creation de la tortue
-        TortueAuto tortue = new TortueAuto();
+        for (int j = 0; j < constante.Constante.nbTortue; j++) {
 
-        // Deplacement de la tortue au centre de la vueTortue
-        int posX = (int) (Math.random() * (600 - 0)) + 0;
-        int posY = (int) (Math.random() * (400 - 0)) + 0;
-        tortue.setPosition(posX / 2, posY / 2);
+            TortueFlock t = new TortueFlock();
+            int posX = (int) (Math.random() * (600 - 0)) + 0;
+            int posY = (int) (Math.random() * (400 - 0)) + 0;
+            t.setPosition(posX / 2, posY / 2);
+            int couleur = (int) (Math.random() * (11 - 0)) + 0;
+            t.setColor(couleur);
+            int vitesse = (int) (Math.random() * (20 - 5)) + 5;
+            t.setVitesse(vitesse);
 
-        listTortue.add(tortue);
-
-        for (TortueAuto tortueA : listTortue) {
-            tortueA.addObserver(this);
+            for (TortueFlock tortueF : listTortue) {
+                tortueF.addObserver(this);
+            }
+            controleur.getListTortue().add(t);
+            vueTortue.addTortue(t);
         }
-
-        controleur.getListTortue().add(tortue);
-        vueTortue.addTortue(tortue);
 
         pack();
         setVisible(true);
@@ -118,7 +117,6 @@ public class VueIhmAuto extends JFrame implements Observer {
         b.setToolTipText(tooltiptext);
         b.setBorder(BorderFactory.createRaisedBevelBorder());
         b.setMargin(new Insets(0, 0, 0, 0));
-        b.addActionListener(controleur);
     }
 
     public void addMenuItem(JMenu m, String label, String command, int key) {
@@ -149,7 +147,41 @@ public class VueIhmAuto extends JFrame implements Observer {
     /**
      * @return the tortue
      */
-    public List<TortueAuto> getListTortue() {
+    public List<TortueFlock> getListTortue() {
         return listTortue;
+    }
+
+    public void flockingMode(TortueFlock t) {
+
+        for (TortueFlock tortue : listTortue) {
+            double c = t.getX() - tortue.getX();
+            double b = t.getY() - tortue.getY();
+            double a = Math.sqrt(Math.pow(c, 2) + Math.pow(b, 2));
+            double alpha = Math.atan(b / c);
+            double angle = 2 * alpha;
+
+            if (a < constante.Constante.distance && angle < constante.Constante.angle * constante.Constante.ratioDegRad) {
+                //System.out.println("true");
+                t.setVitesse((tortue.getVitesse() + tortue.getVitesse()) / 2);
+                t.setColor(tortue.getColor());
+                t.setDirection(tortue.getDirection());
+
+                /*if ((int) Math.sqrt(Math.pow(t.getX() - tortue.getX(), 2) + Math.pow(t.getY() - tortue.getY(), 2)) < 10) {
+                 if (t.getDirection() < tortue.getDirection()) {
+                 t.setDirection(t.getDirection() + 5);
+                 } else {
+                 t.setDirection(t.getDirection() - 5);
+                 } 
+                 }  else {
+                 if (t.getDirection() < tortue.getDirection()) {
+                 t.setDirection(t.getDirection() - 40);
+                 } else {
+                 t.setDirection(t.getDirection() + 40);
+                 }
+                    
+                 t.setVitesse(tortue.getVitesse() - 5);
+                 }*/
+            }
+        }
     }
 }

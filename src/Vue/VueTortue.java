@@ -19,11 +19,11 @@ import javax.swing.JPanel;
  *
  * @author Epulapp
  */
-public class VueTortueNormale extends JPanel {
+public class VueTortue extends JPanel {
 
     List<Tortue> tortues;
 
-    public VueTortueNormale() {
+    public VueTortue() {
         tortues = new ArrayList<>();
     }
 
@@ -61,11 +61,13 @@ public class VueTortueNormale extends JPanel {
     }
 
     public Tortue getClickedTortue(int x, int y, Tortue t) {
-        for (int i = 0; i < tortues.size(); i++) {
-            if (tortues.get(i).getFormes().getArrow().contains(new Point(x, y))) {
-                return tortues.get(i);
+
+        for (Tortue tortue : tortues) {
+            if (tortue.getFormes().getArrow().contains(new Point(x, y))) {
+                return tortue;
             }
         }
+
         return t;
     }
 
@@ -74,7 +76,42 @@ public class VueTortueNormale extends JPanel {
             return;
         }
         t.getFormes().drawTurtle(t);
-        graph.setColor(t.getCouleur());
+        graph.setColor(decodeColor(t.getColor()));
         graph.fillPolygon(t.getFormes().getArrow());
+    }
+
+    public Point getChamp() {
+        return null;
+    }
+    
+    protected Color decodeColor(int c) {
+        switch (c) {
+            case 0:
+                return (Color.black);
+            case 1:
+                return (Color.blue);
+            case 2:
+                return (Color.cyan);
+            case 3:
+                return (Color.darkGray);
+            case 4:
+                return (Color.red);
+            case 5:
+                return (Color.green);
+            case 6:
+                return (Color.lightGray);
+            case 7:
+                return (Color.magenta);
+            case 8:
+                return (Color.orange);
+            case 9:
+                return (Color.gray);
+            case 10:
+                return (Color.pink);
+            case 11:
+                return (Color.yellow);
+            default:
+                return (Color.black);
+        }
     }
 }

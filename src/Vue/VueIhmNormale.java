@@ -43,7 +43,7 @@ import javax.swing.SwingUtilities;
  */
 public class VueIhmNormale extends JFrame implements Observer {
 
-    protected VueTortueNormale vueTortue;
+    protected VueTortue vueTortue;
     public static final Dimension VGAP = new Dimension(1, 5);
     public static final Dimension HGAP = new Dimension(5, 1);
     private Tortue tortue;
@@ -53,7 +53,7 @@ public class VueIhmNormale extends JFrame implements Observer {
 
     public VueIhmNormale() {
         super("Tortue Ninja");
-        controleur = new ControleurIhmNormale(this);
+        controleur = new ControleurIhmNormale(this, tortue);
         logoInit();
 
         addWindowListener(new WindowAdapter() {
@@ -134,10 +134,10 @@ public class VueIhmNormale extends JFrame implements Observer {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        vueTortue = new VueTortueNormale(); //500, 400);
+        vueTortue = new VueTortue(); //500, 400);
         vueTortue.setBackground(Color.white);
-        vueTortue.setSize(new Dimension(600, 400));
-        vueTortue.setPreferredSize(new Dimension(600, 400));
+        vueTortue.setSize(new Dimension(constante.Constante.width, constante.Constante.heigh));
+        vueTortue.setPreferredSize(new Dimension(constante.Constante.width, constante.Constante.heigh));
 
         getContentPane().add(vueTortue, "Center");
 
@@ -199,7 +199,7 @@ public class VueIhmNormale extends JFrame implements Observer {
         vueTortue.repaint();
     }
 
-    public VueTortueNormale getVueTortue() {
+    public VueTortue getVueTortue() {
         return vueTortue;
     }
 
