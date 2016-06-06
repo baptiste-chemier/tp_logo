@@ -166,13 +166,16 @@ public class VueIhmFlock extends JFrame implements Observer {
                 t.setColor(tortue.getColor());
                 t.setDirection(tortue.getDirection());
 
-                /*if ((int) Math.sqrt(Math.pow(t.getX() - tortue.getX(), 2) + Math.pow(t.getY() - tortue.getY(), 2)) < 10) {
-                 if (t.getDirection() < tortue.getDirection()) {
-                 t.setDirection(t.getDirection() + 5);
-                 } else {
-                 t.setDirection(t.getDirection() - 5);
-                 } 
-                 }  else {
+                if ((int) Math.sqrt(Math.pow(t.getX() - tortue.getX(), 2) + Math.pow(t.getY() - tortue.getY(), 2)) < 10) {
+                    if (t.getDirection() < tortue.getDirection()) {
+                        t.setDirection(t.getDirection() + 5);
+                        tortue.setDirection(tortue.getDirection() - 5);
+                    } else {
+                        t.setDirection(t.getDirection() - 5);
+                        tortue.setDirection(tortue.getDirection() + 5);
+
+                    }
+                } /* else {
                  if (t.getDirection() < tortue.getDirection()) {
                  t.setDirection(t.getDirection() - 40);
                  } else {
@@ -181,6 +184,7 @@ public class VueIhmFlock extends JFrame implements Observer {
                     
                  t.setVitesse(tortue.getVitesse() - 5);
                  }*/
+
             }
         }
     }
